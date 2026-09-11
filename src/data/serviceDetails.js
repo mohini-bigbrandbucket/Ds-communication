@@ -1,8 +1,3 @@
-// Content for individual service detail pages (src/pages/ServiceDetail.jsx).
-// Each entry is keyed by the same slug used in services.js / the route
-// "/services/:slug". Add a new service by adding an entry here — the page
-// itself doesn't need to change.
-
 import {
   FileText,
   FileEdit,
