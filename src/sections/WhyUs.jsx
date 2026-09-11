@@ -1,38 +1,56 @@
 import { Link } from "react-router-dom";
 import {
-  Lock,
-  Globe,
-  Activity,
-  FileCheck2,
-  MessageCircle,
+  ShieldCheck,
+  Monitor,
+  Headphones,
+  UserCircle2,
   Users,
 } from "lucide-react";
 
+function WhatsAppIcon({ className, strokeWidth = 1.75 }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={strokeWidth}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+    >
+      <path d="M3 21l1.3-4.4A8.5 8.5 0 1 1 8.6 19.6Z" />
+      <path d="M8.3 8.6c-.2.5-.3 1.3.2 2.3a7 7 0 0 0 4.6 3.6c1 .3 1.7.1 2.2-.2.4-.2.7-.7.8-1.1l.1-.5-2-.9-.5.6c-.1.2-.4.2-.6.1a5 5 0 0 1-2.3-2.1c-.1-.2-.1-.4.1-.6l.5-.5-.8-2-.5-.1c-.4 0-1 .1-1.3.4Z" />
+    </svg>
+  );
+}
+
 const features = [
   {
-    icon: Lock,
+    icon: ShieldCheck,
     title: "Secure Documents",
     description: "Your documents are encrypted and handled securely.",
   },
   {
-    icon: Globe,
+    icon: Monitor,
     title: "Online Application",
     description: "Apply online from anywhere, anytime in minutes.",
   },
   {
-    icon: Activity,
+    icon: Headphones,
     title: "Detailed Tracking",
     description: "Track every step of your application in real-time.",
   },
   {
-    icon: FileCheck2,
+    icon: UserCircle2,
     title: "Clear Assistance Fees",
-    description: "Service fees shown separately from government charges, where applicable.",
+    description:
+      "Service fees shown separately from government charges, where applicable.",
   },
   {
-    icon: MessageCircle,
+    icon: WhatsAppIcon,
     title: "WhatsApp Support",
     description: "Get quick updates and support on WhatsApp.",
+    iconClass: "text-[#25D366]",
   },
   {
     icon: Users,
@@ -68,9 +86,10 @@ export default function WhyUs() {
           <div className="grid gap-px overflow-hidden rounded-xl bg-white/10 sm:grid-cols-3">
             {features.map((f) => (
               <div key={f.title} className="bg-navy-900 p-5">
-                <span className="flex size-10 items-center justify-center rounded-lg bg-white/5 text-brand-400">
-                  <f.icon className="size-5" />
-                </span>
+                <f.icon
+                  className={`size-7 ${f.iconClass ?? "text-brand-400"}`}
+                  strokeWidth={1.75}
+                />
                 <h3 className="mt-3 text-base font-semibold text-white">
                   {f.title}
                 </h3>
