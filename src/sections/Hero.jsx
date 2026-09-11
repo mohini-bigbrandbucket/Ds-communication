@@ -1,107 +1,43 @@
 import { Link } from "react-router-dom";
-import { ArrowRight, Check, FileText } from "lucide-react";
-
-const steps = [
-  { label: "Submitted", status: "done" },
-  { label: "Documents Received", status: "active" },
-  { label: "Verification", status: "pending" },
-  { label: "Payment Verified", status: "pending" },
-  { label: "Processing", status: "pending" },
-  { label: "Department Submitted", status: "pending" },
-  { label: "Approved", status: "pending" },
-  { label: "Certificate Ready", status: "pending" },
-  { label: "Completed", status: "pending" },
-];
+import { ArrowRight } from "lucide-react";
+import heroImage from "../assets/hero1.jpeg";
 
 export default function Hero() {
   return (
-    <section className="overflow-x-hidden bg-brand-50">
-      <div className="mx-auto grid w-full max-w-7xl min-w-0 gap-8 px-4 py-10 sm:px-6 sm:py-16 lg:grid-cols-12 lg:gap-12 lg:py-24">
-        <div className="min-w-0 lg:col-span-5 flex flex-col justify-center">
-          <p className="text-sm font-medium text-brand-600">
+    <section
+      className="relative flex min-h-[calc(100vh-4rem)] items-center overflow-hidden bg-navy-900 bg-cover bg-center bg-no-repeat"
+      style={{ backgroundImage: `url(${heroImage})` }}
+    >
+      {/* readability overlay */}
+      <div className="absolute inset-0 bg-gradient-to-r from-navy-950/90 via-navy-950/70 to-navy-950/20" />
+
+      <div className="relative mx-auto w-full max-w-7xl px-4 py-16 sm:px-6 sm:py-24">
+        <div className="max-w-xl">
+          <p className="text-sm font-medium text-brand-300">
             Your Trusted Digital Service Partner
           </p>
-          <h1 className="mt-3 text-3xl font-bold leading-[1.15] tracking-tight text-navy-900 sm:text-4xl sm:leading-[1.1] lg:text-5xl">
+          <h1 className="mt-3 text-3xl font-bold leading-[1.15] tracking-tight text-white sm:text-4xl sm:leading-[1.1] lg:text-5xl">
             Government &amp; Digital Services, Made Simple.
           </h1>
-          <p className="mt-4 max-w-lg text-sm leading-relaxed text-ink-600 sm:mt-5 sm:text-base">
+          <p className="mt-4 max-w-lg text-sm leading-relaxed text-white/70 sm:mt-5 sm:text-base">
             Apply online, upload documents, pay securely, and track every
             application — government, business, tax, insurance and digital
             services, all in one place.
           </p>
-         <div className="mt-6 flex flex-wrap gap-3 sm:mt-8">
-  <Link
-    to="/services"
-    className="inline-flex flex-1 items-center justify-center gap-2 rounded-lg bg-brand-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-brand-500 transition-colors sm:flex-none"
-  >
-    Explore Services
-  </Link>
-  <Link
-    to="/track-application"
-    className="inline-flex flex-1 items-center justify-center gap-2 rounded-lg border border-line bg-white px-5 py-2.5 text-sm font-semibold text-navy-900 hover:border-brand-300 transition-colors sm:flex-none"
-  >
-    Track Application
-    <ArrowRight className="size-4" />
-  </Link>
-</div>
-        </div>
-
-        <div className="min-w-0 lg:col-span-7 flex flex-col justify-center rounded-lg bg-navy-900 p-4 text-white shadow-xl shadow-navy-900/20 sm:p-6 lg:p-8">
-          <div className="flex flex-wrap items-center justify-between gap-2">
-            <p className="text-sm font-semibold text-white">
-              Live Application Status
-            </p>
-            <p className="text-xs text-white/50">ID: DSC2026XXXX</p>
-          </div>
-
-          <div className="mt-4 flex items-center gap-3 rounded-xl bg-white/5 p-3 sm:mt-5 sm:p-4">
-            <span className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-brand-500/20 text-brand-400 sm:size-9">
-              <FileText className="size-4 sm:size-5" />
-            </span>
-            <div className="min-w-0">
-              <p className="text-xs text-white/50">Application Status</p>
-              <p className="truncate text-base font-semibold text-brand-400 leading-tight sm:text-lg">
-                Documents Received
-              </p>
-              <p className="text-xs text-white/50">Current Stage</p>
-            </div>
-          </div>
-
-          <div className="mt-6 min-w-0 sm:mt-7">
-            <p className="text-xs font-medium text-white/60">
-              Application Progress
-            </p>
-            <div className="mt-4 min-w-0 overflow-x-auto pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-              <div className="flex min-w-[560px] items-start sm:min-w-0">
-                {steps.map((step, i) => (
-                  <div key={step.label} className="flex flex-1 items-start last:flex-none">
-                    <div className="flex flex-col items-center gap-2">
-                      <span
-                        className={`flex size-7 shrink-0 items-center justify-center rounded-full text-xs font-semibold ${
-                          step.status === "done"
-                            ? "bg-emerald-500 text-white"
-                            : step.status === "active"
-                            ? "bg-brand-500 text-white"
-                            : "bg-white/10 text-white/40"
-                        }`}
-                      >
-                        {step.status === "done" ? (
-                          <Check className="size-3.5" strokeWidth={3} />
-                        ) : (
-                          i + 1
-                        )}
-                      </span>
-                      <span className="block max-w-[52px] text-center text-[10px] leading-tight text-white/50">
-                        {step.label}
-                      </span>
-                    </div>
-                    {i < steps.length - 1 && (
-                      <span className="mt-3.5 h-px flex-1 bg-white/10" />
-                    )}
-                  </div>
-                ))}
-              </div>
-            </div>
+          <div className="mt-6 flex flex-wrap gap-3 sm:mt-8">
+            <Link
+              to="/services"
+              className="inline-flex flex-1 items-center justify-center gap-2 rounded-lg bg-brand-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-brand-500 transition-colors sm:flex-none"
+            >
+              Explore Services
+            </Link>
+            <Link
+              to="/track-application"
+              className="inline-flex flex-1 items-center justify-center gap-2 rounded-lg border border-white/30 bg-white/10 px-5 py-2.5 text-sm font-semibold text-white backdrop-blur-sm hover:bg-white/20 transition-colors sm:flex-none"
+            >
+              Track Application
+              <ArrowRight className="size-4" />
+            </Link>
           </div>
         </div>
       </div>
