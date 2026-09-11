@@ -20,12 +20,13 @@ export default function Footer() {
           </Link>
         </div>
       </div>
-
-      <div className="bg-white">
-        <div className="mx-auto max-w-7xl px-6 py-2.5 flex flex-wrap items-center justify-between gap-x-6 gap-y-2">
+      <div className="bg-white h-[75px]">
+        <div className="mx-auto max-w-7xl px-6 h-full flex items-center justify-between">
+          {/* Logo */}
           <Logo />
 
-          <ul className="flex flex-wrap items-center gap-x-6 gap-y-1">
+          {/* Center Links */}
+          <ul className="flex items-center gap-x-6">
             {legalLinks.map((item) => (
               <li key={item.label}>
                 <Link
@@ -38,11 +39,12 @@ export default function Footer() {
             ))}
           </ul>
 
-          
-      <a      href="https://wa.me/"
+          {/* WhatsApp */}
+          <a
+            href="https://wa.me/"
             target="_blank"
             rel="noreferrer"
-            className="inline-flex w-fit items-center gap-1.5 text-xs font-medium text-emerald-600 hover:text-emerald-700"
+            className="inline-flex items-center gap-1.5 text-xs font-medium text-emerald-600 hover:text-emerald-700"
           >
             <MessageCircle className="size-3.5" />
             WhatsApp Support
