@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import {
+  Bell,
   ChevronRight,
   FileStack,
   BookOpenText,
@@ -10,11 +11,11 @@ import {
 const updates = [
   {
     title: "Your GST application is at Document Verification.",
-    time: "2 hours ago",
+    time: "Just now",
   },
   {
     title: "Your PAN application has been submitted successfully.",
-    time: "1 day ago",
+    time: "10 minutes ago",
   },
 ];
 
@@ -48,20 +49,23 @@ const resources = [
 export default function UpdatesResources() {
   return (
     <section className="bg-white border-t border-line">
-      <div className="mx-auto max-w-7xl px-6 py-14 grid gap-10 lg:grid-cols-2">
+      <div className="mx-auto max-w-7xl px-6 py-10 grid gap-8 lg:grid-cols-[0.4fr_0.6fr]">
         <div>
-          <h2 className="text-lg font-bold text-navy-900">
+          <h2 className="text-base font-bold text-navy-900">
             Application Updates
           </h2>
-          <ul className="mt-4 divide-y divide-line rounded-xl border border-line">
+          <ul className="mt-3 divide-y divide-line rounded-xl border border-line">
             {updates.map((update) => (
               <li
                 key={update.title}
-                className="flex items-center justify-between gap-4 px-4 py-4"
+                className="flex items-center justify-between gap-4 px-4 py-3.5"
               >
-                <div>
-                  <p className="text-base text-navy-900">{update.title}</p>
-                  <p className="mt-0.5 text-sm text-ink-400">{update.time}</p>
+                <div className="flex items-start gap-2.5">
+                  <Bell className="mt-0.5 size-4 shrink-0 text-brand-600" />
+                  <div>
+                    <p className="text-sm text-navy-900">{update.title}</p>
+                    <p className="mt-0.5 text-xs text-ink-400">{update.time}</p>
+                  </div>
                 </div>
                 <ChevronRight className="size-4 shrink-0 text-ink-400" />
               </li>
@@ -70,23 +74,25 @@ export default function UpdatesResources() {
         </div>
 
         <div>
-          <h2 className="text-lg font-bold text-navy-900">
+          <h2 className="text-base font-bold text-navy-900">
             Helpful Resources
           </h2>
-          <div className="mt-4 grid grid-cols-2 gap-4">
+          <div className="mt-3 grid grid-cols-2 gap-3 sm:grid-cols-4">
             {resources.map((r) => (
               <Link
                 key={r.title}
                 to={r.to}
-                className="rounded-xl border border-line p-4 hover:border-brand-300 transition-colors"
+                className="rounded-xl border border-line p-3.5 hover:border-brand-300 transition-colors"
               >
-                <span className="flex size-10 items-center justify-center rounded-lg bg-brand-50 text-brand-600">
-                  <r.icon className="size-5" />
+                <span className="flex items-center gap-2">
+                  <span className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-brand-50 text-brand-600">
+                    <r.icon className="size-4" />
+                  </span>
+                  <span className="text-sm font-semibold text-navy-900">
+                    {r.title}
+                  </span>
                 </span>
-                <h3 className="mt-3 text-base font-semibold text-navy-900">
-                  {r.title}
-                </h3>
-                <p className="mt-1 text-sm leading-relaxed text-ink-600">
+                <p className="mt-2 text-xs leading-relaxed text-ink-600">
                   {r.description}
                 </p>
               </Link>
