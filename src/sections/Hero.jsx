@@ -5,13 +5,13 @@ import heroImage from "../assets/hero1.jpeg";
 export default function Hero() {
   return (
     <section
-      className="relative flex min-h-[360px] items-center overflow-hidden bg-navy-900 bg-cover bg-center bg-no-repeat sm:min-h-[560px] lg:min-h-[calc(100vh-3rem)] lg:items-start"
+      className="relative flex min-h-[380px] items-center overflow-hidden bg-navy-900 bg-cover bg-center bg-no-repeat sm:min-h-[560px] lg:min-h-[calc(100vh-3rem)] lg:items-start"
       style={{ backgroundImage: `url(${heroImage})` }}
     >
       {/* readability overlay */}
       <div className="absolute inset-0 bg-navy-950/85 sm:bg-gradient-to-r sm:from-navy-950/90 sm:via-navy-950/70 sm:to-navy-950/25" />
 
-      <div className="relative mx-auto w-full max-w-7xl px-4 py-4 sm:px-6 sm:py-20 lg:px-8 lg:pb-24 lg:pt-20">
+      <div className="relative mx-auto w-full max-w-7xl px-4 pt-4 pb-10 sm:px-6 sm:py-20 lg:px-8 lg:pb-24 lg:pt-20">
         <div className="max-w-md sm:max-w-xl lg:max-w-2xl">
           {/* Trust badge */}
           <div className="inline-flex items-center gap-1.5 rounded-full border border-brand-400/30 bg-brand-400/10 px-3 py-1 backdrop-blur-sm sm:gap-2 sm:px-3 sm:py-1.5">
