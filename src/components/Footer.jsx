@@ -6,21 +6,20 @@ import { legalLinks } from "../data/nav";
 export default function Footer() {
   return (
     <footer>
-      {/* CTA Bar */}
    {/* CTA Bar */}
 <div className="bg-navy-900">
-  <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 sm:px-6 sm:py-2.5">
+  <div className="mx-auto flex max-w-7xl flex-col items-center gap-3 px-6 py-6 text-center sm:flex-row sm:justify-between sm:gap-4 sm:px-6 sm:py-2.5 sm:text-left">
 
-    <p className="min-w-0 flex-1 text-xs font-semibold leading-tight text-white sm:text-sm">
-      Your Documents. Your Applications. One Platform.
+    <p className="text-[15px] font-semibold leading-snug text-white sm:text-sm sm:font-medium">
+      Your Documents, Applications & Payments — All in One Place.
     </p>
 
     <Link
       to="/get-started"
-      className="inline-flex shrink-0 items-center gap-1.5 rounded-lg bg-brand-500 px-3 py-2 text-[10px] font-bold text-white transition-colors hover:bg-brand-400 sm:px-4 sm:py-1.5 sm:text-sm"
+      className="inline-flex w-full items-center justify-center gap-1.5 rounded-lg bg-brand-500 px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-brand-400 sm:w-fit sm:px-4 sm:py-1.5"
     >
-      <span>Start Your Application</span>
-      <ArrowRight className="size-3 sm:size-4" />
+      Start Your Application
+      <ArrowRight className="size-4" />
     </Link>
 
   </div>
