@@ -3,8 +3,7 @@ import { FileCheck2, CircleDot } from "lucide-react";
 export default function DocumentsTimeline({ requirements, timeline }) {
   return (
     <section id="documents" className="scroll-mt-32 bg-brand-50/60">
-      <div className="mx-auto max-w-7xl px-6 py-14 grid gap-6 lg:grid-cols-2">
-        <div className="rounded-xl border border-line bg-white p-7">
+  <div className="mx-auto max-w-7xl px-6 section-pad">        <div className="rounded-xl border border-line bg-white p-7">
           <h2 className="text-lg font-bold text-navy-900">
             What You Need to Apply
           </h2>

@@ -3,8 +3,7 @@ import { Headset, MessageCircle, PhoneCall } from "lucide-react";
 export default function NeedHelp({ title }) {
   return (
     <section className="bg-white">
-      <div className="mx-auto max-w-7xl px-6 py-10">
-        <div className="flex flex-col items-center justify-between gap-5 rounded-xl border border-line bg-brand-50/60 p-6 sm:flex-row">
+ <div className="mx-auto max-w-7xl px-6 section-pad">        <div className="flex flex-col items-center justify-between gap-5 rounded-xl border border-line bg-brand-50/60 p-6 sm:flex-row">
           <div className="flex items-center gap-4">
             <span className="flex size-11 items-center justify-center rounded-full bg-white text-brand-600 shadow-sm">
               <Headset className="size-5" />

@@ -68,8 +68,7 @@ function Stars({ count }) {
 export default function Testimonials() {
   return (
     <section className="bg-brand-50/60 border-t border-line">
-      <div className="mx-auto max-w-7xl px-6 py-14">
-        <div className="flex flex-wrap items-center justify-between gap-3">
+  <div className="mx-auto max-w-7xl px-6 section-pad">        <div className="flex flex-wrap items-center justify-between gap-3">
           <h2 className="text-lg font-bold text-navy-900">
             What Our Customers Say
           </h2>

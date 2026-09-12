@@ -56,8 +56,7 @@ export default function TrackApplication() {
 
   return (
     <section className="bg-brand-50/40">
-      <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 sm:py-16 lg:py-20">
-        <div className="lg:grid lg:grid-cols-[0.42fr_0.58fr] lg:items-start lg:gap-14">
+ <div className="mx-auto max-w-7xl px-4 section-pad sm:px-6">        <div className="lg:grid lg:grid-cols-[0.42fr_0.58fr] lg:items-start lg:gap-14">
 
           {/* LEFT: intro + search */}
           <div>

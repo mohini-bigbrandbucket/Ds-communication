@@ -23,8 +23,7 @@ export default function ServiceCategories() {
 
   return (
     <section className="bg-white">
-      <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 sm:py-16">
-
+ <div className="mx-auto max-w-7xl px-4 section-pad sm:px-6">
         {/* ===================== MOBILE-ONLY VERSION ===================== */}
         <div className="sm:hidden">
           <div className="flex items-center justify-between">

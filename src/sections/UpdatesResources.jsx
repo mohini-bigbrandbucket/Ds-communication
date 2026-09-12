@@ -49,8 +49,7 @@ const resources = [
 export default function UpdatesResources() {
   return (
     <section className="bg-white border-t border-line">
-      <div className="mx-auto max-w-7xl px-6 py-10 grid gap-8 lg:grid-cols-[0.4fr_0.6fr]">
-        <div>
+   <div className="mx-auto max-w-7xl px-6 section-pad">        <div>
           <h2 className="text-base font-bold text-navy-900">
             Application Updates
           </h2>

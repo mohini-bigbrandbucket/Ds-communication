@@ -26,8 +26,7 @@ const infoStrip = [
 export default function ServiceProcess({ process }) {
   return (
     <section id="process" className="scroll-mt-32 bg-white">
-      <div className="mx-auto max-w-7xl px-6 py-14">
-        <h2 className="text-center text-2xl font-bold text-navy-900 sm:text-[28px]">
+  <div className="mx-auto max-w-7xl px-6 section-pad">        <h2 className="text-center text-2xl font-bold text-navy-900 sm:text-[28px]">
           How the Process Works
         </h2>
 

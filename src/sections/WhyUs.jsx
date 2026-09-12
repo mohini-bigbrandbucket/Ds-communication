@@ -62,8 +62,7 @@ const features = [
 export default function WhyUs() {
   return (
     <section className="bg-navy-900">
-      <div className="mx-auto max-w-7xl px-6 py-16">
-        <div className="grid gap-12 lg:grid-cols-[0.8fr_1.4fr] lg:items-center">
+ <div className="mx-auto max-w-7xl px-6 section-pad">        <div className="grid gap-12 lg:grid-cols-[0.8fr_1.4fr] lg:items-center">
           <div>
             <p className="text-base font-semibold text-brand-400">
               Why DS Communication?

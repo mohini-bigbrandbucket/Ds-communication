@@ -40,3 +40,58 @@ body {
     scroll-behavior: auto !important;
   }
 }
+@import "tailwindcss";
+
+@theme {
+  /* ...keep your existing theme block unchanged... */
+}
+
+@layer utilities {
+  /* universal vertical rhythm for every section */
+  .section-pad {
+    padding-top: 3.5rem;    /* 56px – mobile */
+    padding-bottom: 3.5rem;
+  }
+  @media (min-width: 640px) {
+    .section-pad { padding-top: 4rem; padding-bottom: 4rem; }      /* sm */
+  }
+  @media (min-width: 1024px) {
+    .section-pad { padding-top: 5rem; padding-bottom: 5rem; }      /* lg */
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-sans);
+  color: var(--color-ink-900);
+  background: #ffffff;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* --- scroll reveal --- */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+  will-change: opacity, transform;
+}
+.reveal.reveal-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+}

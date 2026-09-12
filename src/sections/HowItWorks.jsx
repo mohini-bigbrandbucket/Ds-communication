@@ -51,8 +51,7 @@ const steps = [
 export default function HowItWorks() {
   return (
     <section className="bg-brand-50/40">
-      <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 sm:py-16">
-
+ <div className="mx-auto max-w-7xl px-4 section-pad sm:px-6">
         {/* ===================== MOBILE-ONLY COMPACT VERSION ===================== */}
      {/* ===================== MOBILE-ONLY COMPACT VERSION ===================== */}
 <div className="sm:hidden">

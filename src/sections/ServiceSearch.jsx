@@ -14,8 +14,7 @@ export default function ServiceSearch() {
 
   return (
     <section className="bg-brand-50/60">
-      <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 sm:py-12">
-        <div className="mx-auto max-w-3xl text-center">
+ <div className="mx-auto max-w-7xl px-4 section-pad sm:px-6">        <div className="mx-auto max-w-3xl text-center">
           <h2 className="text-xl font-bold text-navy-900 sm:text-2xl md:text-[28px]">
             Find the Service You Need
           </h2>

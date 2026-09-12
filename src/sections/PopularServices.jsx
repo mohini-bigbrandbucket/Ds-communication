@@ -15,7 +15,7 @@ const icons = [IdCard, Building2, Receipt, Leaf, FileText, FileEdit];
 export default function PopularServices() {
   return (
     <section className="bg-brand-50/60">
-      <div className="mx-auto max-w-7xl px-6 py-14">
+     <div className="mx-auto max-w-7xl px-6 section-pad">
         <h2 className="text-2xl font-bold text-navy-900 sm:text-3xl">
           Popular Services
         </h2>
