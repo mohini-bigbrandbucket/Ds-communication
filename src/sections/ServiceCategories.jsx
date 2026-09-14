@@ -89,44 +89,38 @@ export default function ServiceCategories() {
               <Link
                 key={cat.title}
                 to={cat.to}
-                className={`group flex flex-col rounded-xl border border-line bg-white p-5 shadow-sm transition-all duration-[900ms] ${EASE} hover:-translate-y-1 hover:border-navy-900 hover:bg-navy-900 hover:shadow-2xl hover:shadow-navy-900/25`}
+                className={`group flex flex-col overflow-hidden rounded-xl border border-line bg-white p-5 shadow-sm transition-all duration-[900ms] ${EASE} hover:-translate-y-1 hover:border-navy-900 hover:bg-navy-900 hover:shadow-2xl hover:shadow-navy-900/25`}
               >
                 <span
-                  className={`flex size-11 shrink-0 items-center justify-center rounded-lg bg-brand-50 text-brand-600 transition-colors duration-[900ms] ${EASE} group-hover:bg-white/10 group-hover:text-white`}
-                >
+                  className={`-mx-5 -mt-5 mb-3.5 block h-1 w-[calc(100%+2.5rem)] bg-brand-500 transition-colors duration-[900ms] ${EASE} group-hover:bg-brand-400`}
+                />
+
+                <span className="flex size-11 shrink-0 items-center justify-center rounded-lg bg-brand-50 text-brand-600">
                   <cat.icon className="size-5" strokeWidth={1.75} />
                 </span>
 
                 <h3
-                  className={`mt-4 text-base font-semibold text-navy-900 transition-colors duration-[900ms] ${EASE} group-hover:text-white`}
+                  className={`mt-3.5 text-base font-semibold text-navy-900 transition-colors duration-[900ms] ${EASE} group-hover:text-white`}
                 >
                   {cat.title}
                 </h3>
 
-                <ul className="mt-3 flex-1 space-y-1.5">
-                  {cat.items.map((item) => (
-                    <li
-                      key={item}
-                      className={`flex items-start gap-2 text-[13px] leading-snug text-ink-600 transition-colors duration-[900ms] ${EASE} group-hover:text-white/60`}
-                    >
-                      <span
-                        className={`mt-[7px] size-1 shrink-0 rounded-full bg-ink-400 transition-colors duration-[900ms] ${EASE} group-hover:bg-white/40`}
-                      />
-                      {item}
-                    </li>
-                  ))}
-                </ul>
+                <p
+                  className={`mt-1.5 line-clamp-2 text-[13px] leading-snug text-ink-600 transition-colors duration-[900ms] ${EASE} group-hover:text-white/60`}
+                >
+                  {cat.items.join(", ")}
+                </p>
 
                 {cat.badge && (
                   <span
-                    className={`mt-3.5 inline-flex w-fit items-center rounded-full bg-brand-50 px-2.5 py-1 text-[11px] font-medium text-brand-600 transition-colors duration-[900ms] ${EASE} group-hover:bg-white/10 group-hover:text-white`}
+                    className={`mt-3 inline-flex w-fit items-center rounded-full bg-brand-50 px-2.5 py-1 text-[11px] font-medium text-brand-600 transition-colors duration-[900ms] ${EASE} group-hover:bg-white/10 group-hover:text-white`}
                   >
                     {cat.badge}
                   </span>
                 )}
 
                 <span
-                  className={`mt-3.5 inline-flex items-center gap-1 border-t border-line pt-3.5 text-[13px] font-semibold text-brand-600 transition-colors duration-[900ms] ${EASE} group-hover:border-white/10 group-hover:text-white`}
+                  className={`mt-3 inline-flex items-center gap-1 text-[13px] font-semibold text-brand-600 transition-colors duration-[900ms] ${EASE} group-hover:text-white`}
                 >
                   Explore Category
                   <ArrowRight
