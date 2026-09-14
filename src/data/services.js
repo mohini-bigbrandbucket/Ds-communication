@@ -20,36 +20,42 @@ export const serviceCategories = [
     title: "Business & Tax",
     items: ["GST, ITR, Udyam, Shop Act", "FSSAI, Company, LLP", "Trademark, IEC"],
     to: "/services/business-tax",
+    badge: "Business Services",
   },
   {
     icon: Car,
     title: "RTO & Vehicle",
     items: ["Driving Licence, RC Services", "Ownership Transfer", "Vehicle Insurance, Challan"],
     to: "/services/rto-vehicle",
+    badge: "Vehicle Services",
   },
   {
     icon: BadgeCheck,
     title: "Passport & Verification",
     items: ["Passport, PCC", "Police Verification"],
     to: "/services/passport-verification",
+    badge: "Travel Documents",
   },
   {
     icon: Scale,
     title: "Legal Services",
     items: ["Affidavit, Agreement", "Gazette, Notary"],
     to: "/services/legal",
+    badge: "Legal Support",
   },
   {
     icon: Landmark,
     title: "Finance & Insurance",
     items: ["Personal Loan, Business Loan", "Home Loan, LAP, Credit Card", "Insurance"],
     to: "/services/finance-insurance",
+    badge: "Financial Services",
   },
   {
     icon: Plane,
     title: "Travel",
     items: ["Flight, Train", "Bus, Hotel"],
     to: "/services/travel",
+    badge: "Travel Services",
   },
 ];
 
@@ -70,8 +76,7 @@ export const popularSearches = [
   { label: "ITR Filing", to: "/services/itr-filing" },
   { label: "Gazette Name Change", to: "/services/gazette-name-change" },
 ];
-// Groups individual services under their category page (`categoryTo`),
-// so the detail page can show "Related Services" without a full rebuild.
+
 export const relatedServicesByCategory = {
   "/services/business-tax": [
     { title: "PAN Card", to: "/services/pan-card" },
@@ -83,6 +88,4 @@ export const relatedServicesByCategory = {
   "/services/legal": [
     { title: "Gazette Name Change", to: "/services/gazette-name-change" },
   ],
-  // Add entries for other categories (government-certificates, rto-vehicle,
-  // passport-verification, finance-insurance, travel) as you build them out.
 };
