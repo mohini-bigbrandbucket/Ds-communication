@@ -30,9 +30,8 @@ const features = [
 
 export default function TrustFeatures() {
   return (
-    <div className="relative z-10 mx-auto -mt-4 max-w-4xl px-4 sm:-mt-14 sm:px-6 lg:-mt-16 lg:px-8">
-      <div className="rounded-2xl border border-line bg-white shadow-md shadow-navy-900/5 sm:shadow-xl sm:shadow-navy-900/10">
-
+<div className="relative z-10 mx-auto -mt-6 max-w-4xl px-4 sm:-mt-10 sm:px-6 lg:-mt-12 lg:px-8">
+<div className="rounded-2xl border border-line bg-white shadow-lg shadow-navy-900/15 sm:shadow-xl sm:shadow-navy-900/20">
         {/* MOBILE: 2x2 grid, icon-on-top card style */}
         <div className="grid grid-cols-2 gap-4 p-5 pb-8 sm:hidden">
           {features.map((feature) => (

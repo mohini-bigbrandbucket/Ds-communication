@@ -5,12 +5,10 @@ import heroImage from "../assets/hero1.jpeg";
 export default function Hero() {
   return (
     <section
-      className="relative flex min-h-[380px] items-center overflow-hidden bg-navy-900 bg-cover bg-center bg-no-repeat sm:min-h-[560px] lg:min-h-[calc(100vh-3rem)] lg:items-start"
-      style={{ backgroundImage: `url(${heroImage})` }}
+className="relative flex min-h-[380px] items-center overflow-hidden bg-navy-900 bg-cover bg-center bg-no-repeat sm:min-h-[520px] lg:min-h-[85vh] lg:items-start"      style={{ backgroundImage: `url(${heroImage})` }}
     >
       {/* readability overlay */}
-      <div className="absolute inset-0 bg-navy-950/85 sm:bg-gradient-to-r sm:from-navy-950/90 sm:via-navy-950/70 sm:to-navy-950/25" />
-
+<div className="absolute inset-0 bg-navy-950/70 sm:bg-gradient-to-r sm:from-navy-950/70 sm:via-navy-950/40 sm:to-transparent" />
       <div className="relative mx-auto w-full max-w-7xl px-4 pt-4 pb-10 sm:px-6 sm:py-20 lg:px-8 lg:pb-24 lg:pt-20">
         <div className="max-w-md sm:max-w-xl lg:max-w-2xl">
           {/* Trust badge */}
@@ -21,11 +19,11 @@ export default function Hero() {
             </p>
           </div>
 
-          <h1 className="mt-3 text-[28px] font-bold leading-[1.2] tracking-tight text-white sm:mt-4 sm:text-4xl sm:leading-[1.15] md:text-5xl lg:text-6xl">
+          <h1 className="mt-3 text-[28px] font-bold leading-[1.2] tracking-tight text-white sm:mt-4 sm:text-4xl sm:leading-[1.15] md:text-5xl lg:text-6xl [text-shadow:0_2px_12px_rgba(0,0,0,0.5)]">
             Government &amp; Digital Services, Made Simple.
           </h1>
 
-          <p className="mt-3 max-w-md text-sm leading-relaxed text-white/70 sm:mt-5 sm:max-w-lg sm:text-base lg:max-w-xl">
+          <p className="mt-3 max-w-md text-sm leading-relaxed text-white/90 sm:mt-5 sm:max-w-lg sm:text-base lg:max-w-xl [text-shadow:0_1px_8px_rgba(0,0,0,0.5)]">
             Apply online, upload documents, pay securely, and track every
             application — government, business, tax, insurance and digital
             services, all in one place.
