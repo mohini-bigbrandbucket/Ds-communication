@@ -35,23 +35,43 @@ export default function ServiceCategories() {
               <Link
                 key={cat.title}
                 to={cat.to}
-                className="flex flex-col gap-3 rounded-2xl border border-line bg-white p-5 shadow-sm transition-colors duration-300 active:bg-brand-50/40"
+                className={`group flex items-start gap-3.5 overflow-hidden rounded-2xl border border-line bg-white p-4 shadow-sm transition-all duration-[900ms] ${EASE} active:-translate-y-1 active:border-navy-900 active:bg-navy-900 active:shadow-2xl active:shadow-navy-900/25`}
               >
-                <span className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-brand-50 text-brand-600">
+                <span
+                  className={`flex size-11 shrink-0 items-center justify-center rounded-xl bg-brand-50 text-brand-600 transition-colors duration-[900ms] ${EASE} group-active:bg-white/10 group-active:text-white`}
+                >
                   <cat.icon className="size-5.5" strokeWidth={1.75} />
                 </span>
-                <div>
-                  <p className="text-[15px] font-semibold text-navy-900">
+
+                <div className="min-w-0 flex-1">
+                  <p
+                    className={`text-[15px] font-semibold text-navy-900 transition-colors duration-[900ms] ${EASE} group-active:text-white`}
+                  >
                     {cat.title}
                   </p>
-                  <p className="mt-1 text-[13px] leading-relaxed text-ink-600">
+                  <p
+                    className={`mt-1 text-[13px] leading-relaxed text-ink-600 transition-colors duration-[900ms] ${EASE} group-active:text-white/60`}
+                  >
                     {cat.items.join(", ")}
                   </p>
+
+                  {cat.badge && (
+                    <span
+                      className={`mt-2 inline-flex w-fit items-center rounded-full bg-brand-50 px-2.5 py-1 text-[11px] font-medium text-brand-600 transition-colors duration-[900ms] ${EASE} group-active:bg-white/10 group-active:text-white`}
+                    >
+                      {cat.badge}
+                    </span>
+                  )}
+
+                  <span
+                    className={`mt-2 flex items-center gap-1 text-[13px] font-semibold text-brand-600 transition-colors duration-[900ms] ${EASE} group-active:text-white`}
+                  >
+                    Explore Category
+                    <ArrowRight
+                      className={`size-3.5 transition-transform duration-[900ms] ${EASE} group-active:translate-x-1`}
+                    />
+                  </span>
                 </div>
-                <span className="inline-flex items-center gap-1 text-[13px] font-semibold text-brand-600">
-                  Explore Category
-                  <ArrowRight className="size-3.5" />
-                </span>
               </Link>
             ))}
           </div>
