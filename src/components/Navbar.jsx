@@ -3,12 +3,15 @@ import { NavLink, Link } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import Logo from "./Logo";
 import { primaryNav, utilityLinks } from "../data/nav";
+import AnnouncementBar from "./AnnouncementBar";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
 
   return (
     <header className="sticky top-0 z-50 bg-white/95 backdrop-blur border-b border-line">
+      <AnnouncementBar />
+
       <div className="mx-auto max-w-7xl px-6">
         <div className="h-16 flex items-center justify-between gap-6">
           <div className="flex items-center gap-10">

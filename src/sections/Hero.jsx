@@ -1,14 +1,55 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight, ShieldCheck } from "lucide-react";
 import heroImage from "../assets/hero1.jpeg";
 
+const STATIC_PART = "Government";
+const TYPED_PART = " & Digital Services, Made Simple.";
+
+function useTypewriter(text, speed = 120, startDelay = 300) {
+  const [count, setCount] = useState(0);
+  const [done, setDone] = useState(false);
+
+  useEffect(() => {
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduce) {
+      setCount(text.length);
+      setDone(true);
+      return;
+    }
+
+    let i = 0;
+    let interval;
+    const timeout = setTimeout(() => {
+      interval = setInterval(() => {
+        i += 1;
+        setCount(i);
+        if (i >= text.length) {
+          clearInterval(interval);
+          setDone(true);
+        }
+      }, speed);
+    }, startDelay);
+
+    return () => {
+      clearTimeout(timeout);
+      clearInterval(interval);
+    };
+  }, [text, speed, startDelay]);
+
+  return { typed: text.slice(0, count), done };
+}
+
 export default function Hero() {
+  const { typed, done } = useTypewriter(TYPED_PART);
+
   return (
     <section
-className="relative flex min-h-[380px] items-center overflow-hidden bg-navy-900 bg-cover bg-center bg-no-repeat sm:min-h-[520px] lg:min-h-[85vh] lg:items-start"      style={{ backgroundImage: `url(${heroImage})` }}
+      className="relative flex min-h-[380px] items-center overflow-hidden bg-navy-900 bg-cover bg-center bg-no-repeat sm:min-h-[520px] lg:min-h-[85vh] lg:items-start"
+      style={{ backgroundImage: `url(${heroImage})` }}
     >
       {/* readability overlay */}
-<div className="absolute inset-0 bg-navy-950/70 sm:bg-gradient-to-r sm:from-navy-950/70 sm:via-navy-950/40 sm:to-transparent" />
+      <div className="absolute inset-0 bg-navy-950/70 sm:bg-gradient-to-r sm:from-navy-950/70 sm:via-navy-950/40 sm:to-transparent" />
       <div className="relative mx-auto w-full max-w-7xl px-4 pt-4 pb-10 sm:px-6 sm:py-20 lg:px-8 lg:pb-24 lg:pt-20">
         <div className="max-w-md sm:max-w-xl lg:max-w-2xl">
           {/* Trust badge */}
@@ -19,8 +60,16 @@ className="relative flex min-h-[380px] items-center overflow-hidden bg-navy-900 
             </p>
           </div>
 
-          <h1 className="mt-3 text-[28px] font-bold leading-[1.2] tracking-tight text-white sm:mt-4 sm:text-4xl sm:leading-[1.15] md:text-5xl lg:text-6xl [text-shadow:0_2px_12px_rgba(0,0,0,0.5)]">
-            Government &amp; Digital Services, Made Simple.
+          <h1 className="mt-3 min-h-[3.6em] text-[28px] font-bold leading-[1.2] tracking-tight text-white sm:mt-4 sm:min-h-[2.3em] sm:text-4xl sm:leading-[1.15] md:text-5xl lg:text-6xl [text-shadow:0_2px_12px_rgba(0,0,0,0.5)]">
+            {STATIC_PART}
+            {typed}
+            <span
+              aria-hidden="true"
+              className={`ml-1 inline-block h-[0.9em] w-[3px] translate-y-[0.08em] bg-sky-300 align-middle ${
+                done ? "animate-pulse" : ""
+              }`}
+            />
+            <span className="sr-only">{STATIC_PART}{TYPED_PART}</span>
           </h1>
 
           <p className="mt-3 max-w-md text-sm leading-relaxed text-white/90 sm:mt-5 sm:max-w-lg sm:text-base lg:max-w-xl [text-shadow:0_1px_8px_rgba(0,0,0,0.5)]">

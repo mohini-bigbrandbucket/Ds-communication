@@ -16,11 +16,11 @@ export default function Home() {
       <Hero />
       <QuickActions />
       <Reveal><ServiceCategories /></Reveal>
-      <Reveal><PopularServices /></Reveal>
+      {/* <Reveal><PopularServices /></Reveal> */}
       <Reveal><HowItWorks /></Reveal>
       <Reveal><TrackApplication /></Reveal>
       <Reveal><WhyUs /></Reveal>
-      <Reveal><UpdatesResources /></Reveal>
+      {/* <Reveal><UpdatesResources /></Reveal> */}
       <Reveal><Testimonials /></Reveal>
       <Reveal><FAQ /></Reveal>
     </>
