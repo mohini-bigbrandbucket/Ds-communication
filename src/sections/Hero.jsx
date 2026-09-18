@@ -57,20 +57,42 @@ function GoogleGlyph() {
 
 const REVIEWER_COLORS = ["bg-brand-400", "bg-sky-400", "bg-emerald-400"];
 
+// Shared entrance treatment: hidden state → revealed state, staggered per
+// element via `delay`. One orchestrated reveal on load, nothing looping.
+function reveal(mounted, delay = "") {
+  return `transition-all duration-700 ease-out motion-reduce:transition-none motion-reduce:transform-none ${delay} ${
+    mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+  }`;
+}
+
 export default function Hero() {
   const { typed, typing } = useTypewriter(TYPED_PART);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    const frame = requestAnimationFrame(() => setMounted(true));
+    return () => cancelAnimationFrame(frame);
+  }, []);
 
   return (
-    <section
-      className="relative flex min-h-[380px] items-center overflow-hidden bg-navy-900 bg-cover bg-center bg-no-repeat sm:min-h-[520px] lg:min-h-[85vh]"
-      style={{ backgroundImage: `url(${heroImage})` }}
-    >
+    <section className="relative flex min-h-[380px] items-center overflow-hidden bg-navy-900 sm:min-h-[520px] lg:min-h-[85vh]">
+      {/* Background photo: slow continuous zoom-out from load, purely decorative */}
+      <div
+        className={`absolute inset-0 bg-cover bg-center bg-no-repeat transition-transform duration-[6000ms] ease-out motion-reduce:transition-none motion-reduce:scale-100 ${
+          mounted ? "scale-100" : "scale-110"
+        }`}
+        style={{ backgroundImage: `url(${heroImage})` }}
+      />
+
       {/* readability overlay */}
       <div className="absolute inset-0 bg-navy-950/70 sm:bg-navy-950/60" />
+
       <div className="relative mx-auto w-full max-w-7xl px-4 pt-4 pb-10 sm:px-6 sm:py-20 lg:px-8">
         <div className="mx-auto flex max-w-md flex-col items-center text-center sm:max-w-xl lg:max-w-2xl">
           {/* Google rating badge */}
-          <div className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-3 py-1.5 backdrop-blur-sm sm:px-4 sm:py-2">
+          <div
+            className={`inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-3 py-1.5 backdrop-blur-sm sm:px-4 sm:py-2 ${reveal(mounted)}`}
+          >
             <GoogleGlyph />
             <div className="flex -space-x-2">
               {REVIEWER_COLORS.map((color, i) => (
@@ -92,7 +114,9 @@ export default function Hero() {
             <span className="text-xs text-white/70 sm:text-sm">(10k+ Reviews)</span>
           </div>
 
-          <h1 className="mt-4 min-h-[3.6em] text-[28px] font-bold leading-[1.2] tracking-tight text-white sm:mt-6 sm:min-h-[2.3em] sm:text-4xl sm:leading-[1.15] md:text-5xl lg:text-6xl [text-shadow:0_2px_12px_rgba(0,0,0,0.5)]">
+          <h1
+            className={`mt-4 min-h-[3.6em] text-[28px] font-bold leading-[1.2] tracking-tight text-white sm:mt-6 sm:min-h-[2.3em] sm:text-4xl sm:leading-[1.15] md:text-5xl lg:text-6xl [text-shadow:0_2px_12px_rgba(0,0,0,0.5)] ${reveal(mounted, "delay-150")}`}
+          >
             {STATIC_PART}
             {typed}
             <span
@@ -104,7 +128,9 @@ export default function Hero() {
             <span className="sr-only">{STATIC_PART}{TYPED_PART}</span>
           </h1>
 
-          <p className="mt-4 flex max-w-md flex-wrap items-center justify-center gap-x-1.5 gap-y-2 text-sm leading-relaxed text-white/90 sm:mt-6 sm:max-w-lg sm:text-base lg:max-w-xl [text-shadow:0_1px_8px_rgba(0,0,0,0.5)]">
+          <p
+            className={`mt-4 flex max-w-md flex-wrap items-center justify-center gap-x-1.5 gap-y-2 text-sm leading-relaxed text-white/90 sm:mt-6 sm:max-w-lg sm:text-base lg:max-w-xl [text-shadow:0_1px_8px_rgba(0,0,0,0.5)] ${reveal(mounted, "delay-300")}`}
+          >
             <span>Apply online, upload documents, and track every application, the</span>
             <span className="inline-flex items-center rounded-full bg-brand-600 px-3 py-1 text-xs font-bold text-white sm:text-sm">
               100% Online
@@ -112,7 +138,9 @@ export default function Hero() {
             <span>way. Trusted by thousands. Backed by real experts.</span>
           </p>
 
-          <div className="mt-5 flex flex-row flex-wrap justify-center gap-2 sm:mt-8 sm:gap-3">
+          <div
+            className={`mt-5 flex flex-row flex-wrap justify-center gap-2 sm:mt-8 sm:gap-3 ${reveal(mounted, "delay-500")}`}
+          >
             <Link
               to="/services"
               className="inline-flex items-center justify-center gap-1.5 rounded-lg bg-brand-600 px-4 py-2.5 text-xs font-semibold text-white transition-colors hover:bg-brand-500 sm:px-6 sm:py-3 sm:text-sm"
@@ -122,10 +150,10 @@ export default function Hero() {
 
             <Link
               to="/track-application"
-              className="inline-flex items-center justify-center gap-1.5 rounded-lg border border-white/30 bg-white/10 px-4 py-2.5 text-xs font-semibold text-white backdrop-blur-sm transition-colors hover:bg-white/20 sm:px-6 sm:py-3 sm:text-sm"
+              className="group inline-flex items-center justify-center gap-1.5 rounded-lg border border-white/30 bg-white/10 px-4 py-2.5 text-xs font-semibold text-white backdrop-blur-sm transition-colors hover:bg-white/20 sm:px-6 sm:py-3 sm:text-sm"
             >
               Track Application
-              <ArrowRight className="size-3.5 sm:size-4" />
+              <ArrowRight className="size-3.5 transition-transform duration-300 group-hover:translate-x-1 sm:size-4" />
             </Link>
           </div>
         </div>

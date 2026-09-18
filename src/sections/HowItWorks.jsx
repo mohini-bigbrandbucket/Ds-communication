@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from "react";
 import {
   ListChecks,
   FileEdit,
@@ -8,6 +9,8 @@ import {
   ArrowRight,
 } from "lucide-react";
 import { Link } from "react-router-dom";
+
+const EASE = "ease-[cubic-bezier(0.22,1,0.36,1)]";
 
 const steps = [
   {
@@ -48,50 +51,102 @@ const steps = [
   },
 ];
 
-export default function HowItWorks() {
-  return (
-    <section className="bg-brand-50/40">
- <div className="mx-auto max-w-7xl px-4 section-pad sm:px-6">
-        {/* ===================== MOBILE-ONLY COMPACT VERSION ===================== */}
-     {/* ===================== MOBILE-ONLY COMPACT VERSION ===================== */}
-<div className="sm:hidden">
-  <h2 className="text-xl font-bold text-navy-900">How It Works</h2>
+// Fires once when the section scrolls into view, so the reveal plays when
+// someone actually reaches this section rather than on page load.
+function useInView(options) {
+  const ref = useRef(null);
+  const [inView, setInView] = useState(false);
 
-  <div className="mt-6 -mx-4 overflow-x-auto px-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-    <div className="flex w-max items-start">
-      {steps.map((step, i) => (
-        <div key={step.title} className="flex items-start">
-          <div className="flex w-14 flex-col items-center gap-2 text-center">
-            <span className="flex size-11 shrink-0 items-center justify-center rounded-full bg-brand-600 text-white">
-              <step.icon className="size-5" strokeWidth={1.75} />
-            </span>
-            <span className="text-xs font-semibold text-navy-900 leading-tight">
-              {step.shortLabel}
-            </span>
+  useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setInView(true);
+      return;
+    }
+    const node = ref.current;
+    if (!node) return;
+
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        setInView(true);
+        observer.disconnect();
+      }
+    }, options);
+
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, [options]);
+
+  return [ref, inView];
+}
+
+// One calm treatment used everywhere: fade up with a slight scale, no
+// overshoot, no looping effects — just a clean, quiet arrival.
+function reveal(visible, delayMs = 0) {
+  return {
+    className: `transition-all duration-[550ms] ${EASE} motion-reduce:transition-none motion-reduce:scale-100 ${
+      visible ? "opacity-100 translate-y-0 scale-100" : "opacity-0 translate-y-4 scale-[0.97]"
+    }`,
+    style: { transitionDelay: visible ? `${delayMs}ms` : "0ms" },
+  };
+}
+
+export default function HowItWorks() {
+  const [sectionRef, visible] = useInView({ threshold: 0.15 });
+
+  return (
+    <section ref={sectionRef} className="bg-brand-50/40">
+      <div className="mx-auto max-w-7xl px-4 section-pad sm:px-6">
+        {/* ===================== MOBILE-ONLY COMPACT VERSION ===================== */}
+        <div className="sm:hidden">
+          {(() => {
+            const r = reveal(visible);
+            return (
+              <h2 style={r.style} className={`text-xl font-bold text-navy-900 ${r.className}`}>
+                How It Works
+              </h2>
+            );
+          })()}
+
+          <div className="mt-6 -mx-4 overflow-x-auto px-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+            <div className="flex w-max items-start">
+              {steps.map((step, i) => {
+                const r = reveal(visible, 100 + i * 80);
+                return (
+                  <div key={step.title} className="flex items-start">
+                    <div
+                      style={r.style}
+                      className={`flex w-14 flex-col items-center gap-2 text-center ${r.className}`}
+                    >
+                      <span className="flex size-11 shrink-0 items-center justify-center rounded-full bg-brand-600 text-white">
+                        <step.icon className="size-5" strokeWidth={1.75} />
+                      </span>
+                      <span className="text-xs font-semibold text-navy-900 leading-tight">
+                        {step.shortLabel}
+                      </span>
+                    </div>
+
+                    {i !== steps.length - 1 && (
+                      <ArrowRight className="mx-1.5 mt-4 size-4 shrink-0 text-brand-300" />
+                    )}
+                  </div>
+                );
+              })}
+            </div>
           </div>
 
-          {i !== steps.length - 1 && (
-            <ArrowRight className="mx-1.5 mt-4 size-4 shrink-0 text-brand-300" />
-          )}
+          <Link
+            to="/services"
+            className="mt-7 flex w-full items-center justify-center gap-2 rounded-lg bg-brand-600 px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-brand-500"
+          >
+            Start Your Application
+            <ArrowRight className="size-4" />
+          </Link>
         </div>
-      ))}
-    </div>
-  </div>
 
-  <Link
-    to="/services"
-    className="mt-7 flex w-full items-center justify-center gap-2 rounded-lg bg-brand-600 px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-brand-500"
-  >
-    Start Your Application
-    <ArrowRight className="size-4" />
-  </Link>
-</div>
-
-        {/* ===================== DESKTOP / TABLET VERSION (unchanged) ===================== */}
+        {/* ===================== DESKTOP / TABLET VERSION ===================== */}
         <div className="hidden gap-10 sm:grid lg:grid-cols-[0.35fr_0.65fr] lg:items-center">
-
           {/* LEFT CONTENT */}
-          <div>
+          <div style={reveal(visible).style} className={reveal(visible).className}>
             <p className="text-xs font-bold uppercase tracking-wide text-brand-600 sm:text-sm">
               How It Works
             </p>
@@ -109,7 +164,10 @@ export default function HowItWorks() {
           {/* RIGHT SIDE */}
           <div className="relative pr-4 lg:pr-6">
             <svg
-              className="pointer-events-none absolute inset-0 hidden h-full w-full lg:block"
+              className={`pointer-events-none absolute inset-0 hidden h-full w-full lg:block transition-opacity duration-[900ms] ${EASE} motion-reduce:transition-none ${
+                visible ? "opacity-100" : "opacity-0"
+              }`}
+              style={{ transitionDelay: visible ? "300ms" : "0ms" }}
               viewBox="0 0 100 100"
               preserveAspectRatio="none"
               fill="none"
@@ -133,14 +191,16 @@ export default function HowItWorks() {
             <div className="relative grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {steps.map((step, i) => {
                 const Icon = step.icon;
+                const r = reveal(visible, 150 + i * 90);
 
                 return (
                   <div
                     key={step.title}
-                    className="rounded-xl border border-line bg-white p-5 shadow-sm"
+                    style={r.style}
+                    className={`group rounded-xl border border-line bg-white p-5 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-brand-300 hover:shadow-md ${r.className}`}
                   >
                     <div className="flex items-center gap-2.5">
-                      <span className="flex size-12 items-center justify-center rounded-lg bg-brand-50 text-brand-600">
+                      <span className="flex size-12 items-center justify-center rounded-lg bg-brand-50 text-brand-600 transition-colors duration-300 group-hover:bg-brand-600 group-hover:text-white">
                         <Icon className="size-6" strokeWidth={1.75} />
                       </span>
                       <span className="text-xl font-bold text-brand-600">

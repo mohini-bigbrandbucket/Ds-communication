@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight, ChevronUp } from "lucide-react";
 import { serviceCategories } from "../data/services";
@@ -37,11 +37,43 @@ const VARIANTS = [
   },
 ];
 
-function CategoryCard({ cat, variant }) {
+// Fires once when the section scrolls into view — used to trigger the
+// reveal instead of animating on page load, since this grid sits below
+// the fold.
+function useInView(options) {
+  const ref = useRef(null);
+  const [inView, setInView] = useState(false);
+
+  useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setInView(true);
+      return;
+    }
+    const node = ref.current;
+    if (!node) return;
+
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        setInView(true);
+        observer.disconnect();
+      }
+    }, options);
+
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, [options]);
+
+  return [ref, inView];
+}
+
+function CategoryCard({ cat, variant, visible, delayMs }) {
   return (
     <Link
       to={cat.to}
-      className={`group relative flex min-h-[240px] flex-col overflow-hidden rounded-2xl p-5 shadow-sm transition-all duration-[500ms] ${EASE} hover:-translate-y-1 hover:shadow-xl ${variant.card}`}
+      style={{ transitionDelay: visible ? `${delayMs}ms` : "0ms" }}
+      className={`group relative flex min-h-[240px] flex-col overflow-hidden rounded-2xl p-5 shadow-sm transition-all duration-[500ms] ${EASE} motion-reduce:transition-none hover:-translate-y-1 hover:shadow-xl ${variant.card} ${
+        visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+      }`}
     >
       <h3 className={`text-xl font-semibold leading-snug transition-colors duration-[500ms] ${EASE} ${variant.heading}`}>
         {cat.title}
@@ -81,6 +113,7 @@ function CategoryCard({ cat, variant }) {
 
 export default function ServiceCategories() {
   const [showAll, setShowAll] = useState(false);
+  const [sectionRef, visible] = useInView({ threshold: 0.15 });
 
   const visibleCategories = showAll
     ? serviceCategories
@@ -89,22 +122,34 @@ export default function ServiceCategories() {
   const hasMore = serviceCategories.length > MOBILE_VISIBLE_COUNT;
 
   return (
-    <section className="bg-white">
+    <section ref={sectionRef} className="bg-white">
       <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 sm:py-16">
-        <p className="text-xs font-bold uppercase tracking-wide text-brand-600 sm:text-sm">
-          Service Directory
-        </p>
-        <h2 className="mt-2 text-2xl font-bold leading-tight text-navy-900 sm:text-3xl">
-          Explore Services <span className="text-brand-600">by Category</span>
-        </h2>
-        <p className="mt-1.5 text-sm text-ink-600">
-          Find the right service with clear guidance at every step.
-        </p>
+        <div
+          className={`transition-all duration-700 ${EASE} motion-reduce:transition-none ${
+            visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+          }`}
+        >
+          <p className="text-xs font-bold uppercase tracking-wide text-brand-600 sm:text-sm">
+            Service Directory
+          </p>
+          <h2 className="mt-2 text-2xl font-bold leading-tight text-navy-900 sm:text-3xl">
+            Explore Services <span className="text-brand-600">by Category</span>
+          </h2>
+          <p className="mt-1.5 text-sm text-ink-600">
+            Find the right service with clear guidance at every step.
+          </p>
+        </div>
 
         {/* Mobile: capped list + expand */}
         <div className="mt-5 grid grid-cols-1 gap-3 sm:hidden">
           {visibleCategories.map((cat, i) => (
-            <CategoryCard key={cat.title} cat={cat} variant={VARIANTS[i % VARIANTS.length]} />
+            <CategoryCard
+              key={cat.title}
+              cat={cat}
+              variant={VARIANTS[i % VARIANTS.length]}
+              visible={visible}
+              delayMs={150 + i * 90}
+            />
           ))}
         </div>
 
@@ -126,7 +171,13 @@ export default function ServiceCategories() {
         {/* Desktop / tablet: full grid, every card visible */}
         <div className="mt-8 hidden gap-5 sm:grid sm:grid-cols-2 lg:grid-cols-4">
           {serviceCategories.map((cat, i) => (
-            <CategoryCard key={cat.title} cat={cat} variant={VARIANTS[i % VARIANTS.length]} />
+            <CategoryCard
+              key={cat.title}
+              cat={cat}
+              variant={VARIANTS[i % VARIANTS.length]}
+              visible={visible}
+              delayMs={150 + i * 70}
+            />
           ))}
         </div>
       </div>
