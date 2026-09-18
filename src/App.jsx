@@ -5,6 +5,8 @@ import ComingSoon from "./pages/ComingSoon";
 import NotFound from "./pages/NotFound";
 import Service from "./pages/Service";
 import ServiceDetail from "./pages/ServiceDetail";
+import Contact from "./pages/Contact";
+import About from "./pages/AboutUs";
 
 export default function App() {
   return (
@@ -27,8 +29,8 @@ export default function App() {
           path="/partner-with-us"
           element={<ComingSoon title="Partner With Us" />}
         />
-        <Route path="/about" element={<ComingSoon title="About" />} />
-        <Route path="/contact" element={<ComingSoon title="Contact" />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<Contact />} />
         <Route path="/careers" element={<ComingSoon title="Careers" />} />
         <Route
           path="/get-started"
@@ -38,7 +40,7 @@ export default function App() {
           path="/login/customer"
           element={<ComingSoon title="Customer Login" />}
         />
-       
+
         <Route
           path="/legal/privacy-policy"
           element={<ComingSoon title="Privacy Policy" />}

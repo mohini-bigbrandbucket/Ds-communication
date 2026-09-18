@@ -75,7 +75,7 @@ export default function Hero() {
   }, []);
 
   return (
-    <section className="relative flex min-h-[380px] items-center overflow-hidden bg-navy-900 sm:min-h-[520px] lg:min-h-[85vh]">
+    <section className="relative flex min-h-[430px] items-center overflow-hidden bg-navy-900 sm:min-h-[520px] lg:min-h-[85vh]">
       {/* Background photo: slow continuous zoom-out from load, purely decorative */}
       <div
         className={`absolute inset-0 bg-cover bg-center bg-no-repeat transition-transform duration-[6000ms] ease-out motion-reduce:transition-none motion-reduce:scale-100 ${
@@ -87,8 +87,7 @@ export default function Hero() {
       {/* readability overlay */}
       <div className="absolute inset-0 bg-navy-950/70 sm:bg-navy-950/60" />
 
-      <div className="relative mx-auto w-full max-w-7xl px-4 pt-4 pb-10 sm:px-6 sm:py-20 lg:px-8">
-        <div className="mx-auto flex max-w-md flex-col items-center text-center sm:max-w-xl lg:max-w-2xl">
+<div className="relative mx-auto w-full max-w-7xl px-4 pt-4 pb-24 sm:px-6 sm:py-20 sm:pb-32 lg:px-8 lg:pb-40"> <div className="mx-auto flex max-w-md flex-col items-center text-center sm:max-w-xl lg:max-w-2xl">
           {/* Google rating badge */}
           <div
             className={`inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-3 py-1.5 backdrop-blur-sm sm:px-4 sm:py-2 ${reveal(mounted)}`}
@@ -157,6 +156,21 @@ export default function Hero() {
             </Link>
           </div>
         </div>
+      </div>
+
+      {/* bottom wave divider */}
+      <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 bottom-0 z-10 leading-[0]">
+        <svg
+          viewBox="0 0 1440 120"
+          className="h-14 w-full sm:h-20 lg:h-28"
+          preserveAspectRatio="none"
+        >
+          <path
+            fill="currentColor"
+            className="text-white"
+            d="M0,64 C360,-10 1080,140 1440,40 L1440,120 L0,120 Z"
+          />
+        </svg>
       </div>
     </section>
   );
