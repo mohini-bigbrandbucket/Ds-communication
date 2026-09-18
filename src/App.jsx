@@ -38,10 +38,7 @@ export default function App() {
           path="/login/customer"
           element={<ComingSoon title="Customer Login" />}
         />
-        <Route
-          path="/login/partner"
-          element={<ComingSoon title="Partner Login" />}
-        />
+       
         <Route
           path="/legal/privacy-policy"
           element={<ComingSoon title="Privacy Policy" />}

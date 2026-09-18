@@ -6,6 +6,79 @@ import { serviceCategories } from "../data/services";
 const EASE = "ease-[cubic-bezier(0.22,1,0.36,1)]";
 const MOBILE_VISIBLE_COUNT = 4;
 
+// Sequence: brand-blue, near-black, light — each card trends toward a single
+// unified "active" dark-navy hover, except the near-black card, which lights
+// up brand-blue instead (it can't get any darker). Same hover language for
+// every card, so the feedback always reads as deliberate, not accidental.
+const VARIANTS = [
+  {
+    card: "bg-brand-600 border border-brand-600 shadow-brand-600/10 hover:bg-navy-950 hover:border-navy-950 hover:shadow-navy-950/30",
+    heading: "text-white",
+    body: "text-white/70 group-hover:text-white/55",
+    iconWrap: "bg-white/15 text-white group-hover:bg-white/10",
+    badge: "bg-white/15 text-white group-hover:bg-white/10",
+    cta: "text-white",
+  },
+  {
+    card: "bg-navy-950 border border-navy-950 shadow-navy-950/10 hover:bg-brand-600 hover:border-brand-600 hover:shadow-brand-600/30",
+    heading: "text-white",
+    body: "text-white/55 group-hover:text-white/80",
+    iconWrap: "bg-white/10 text-white group-hover:bg-white/20",
+    badge: "bg-white/10 text-white group-hover:bg-white/20",
+    cta: "text-white",
+  },
+  {
+    card: "bg-white border border-line hover:bg-navy-950 hover:border-navy-950 hover:shadow-navy-950/30",
+    heading: "text-navy-900 group-hover:text-white",
+    body: "text-ink-600 group-hover:text-white/60",
+    iconWrap: "bg-navy-900/5 text-navy-900 group-hover:bg-white/10 group-hover:text-white",
+    badge: "bg-navy-900/5 text-navy-900 group-hover:bg-white/10 group-hover:text-white",
+    cta: "text-navy-900 group-hover:text-white",
+  },
+];
+
+function CategoryCard({ cat, variant }) {
+  return (
+    <Link
+      to={cat.to}
+      className={`group relative flex min-h-[240px] flex-col overflow-hidden rounded-2xl p-5 shadow-sm transition-all duration-[500ms] ${EASE} hover:-translate-y-1 hover:shadow-xl ${variant.card}`}
+    >
+      <h3 className={`text-xl font-semibold leading-snug transition-colors duration-[500ms] ${EASE} ${variant.heading}`}>
+        {cat.title}
+      </h3>
+
+      <p className={`mt-2 text-[13px] leading-relaxed transition-colors duration-[500ms] ${EASE} ${variant.body}`}>
+        {cat.items.join(", ")}
+      </p>
+
+      <span
+        className={`mt-4 inline-flex w-fit items-center gap-1 text-[13px] font-semibold transition-colors duration-[500ms] ${EASE} ${variant.cta}`}
+      >
+        Explore Category
+        <ArrowRight
+          className={`size-3.5 transition-transform duration-[500ms] ${EASE} group-hover:translate-x-1`}
+        />
+      </span>
+
+      <div className="mt-auto flex items-end justify-between pt-6">
+        <span
+          className={`flex size-12 shrink-0 items-center justify-center rounded-xl transition-colors duration-[500ms] ${EASE} ${variant.iconWrap}`}
+        >
+          <cat.icon className="size-6" strokeWidth={1.5} />
+        </span>
+
+        {cat.badge && (
+          <span
+            className={`inline-flex items-center rounded-full px-2.5 py-1 text-[11px] font-medium transition-colors duration-[500ms] ${EASE} ${variant.badge}`}
+          >
+            {cat.badge}
+          </span>
+        )}
+      </div>
+    </Link>
+  );
+}
+
 export default function ServiceCategories() {
   const [showAll, setShowAll] = useState(false);
 
@@ -18,138 +91,43 @@ export default function ServiceCategories() {
   return (
     <section className="bg-white">
       <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 sm:py-16">
-        {/* ===================== MOBILE-ONLY VERSION ===================== */}
-        <div className="sm:hidden">
-          <p className="text-xs font-bold uppercase tracking-wide text-brand-600">
-            Service Directory
-          </p>
-          <h2 className="mt-1 text-2xl font-bold leading-tight text-navy-900">
-            Explore Services <span className="text-brand-600">by Category</span>
-          </h2>
-          <p className="mt-1.5 text-sm text-ink-600">
-            Find the right service with clear guidance at every step.
-          </p>
+        <p className="text-xs font-bold uppercase tracking-wide text-brand-600 sm:text-sm">
+          Service Directory
+        </p>
+        <h2 className="mt-2 text-2xl font-bold leading-tight text-navy-900 sm:text-3xl">
+          Explore Services <span className="text-brand-600">by Category</span>
+        </h2>
+        <p className="mt-1.5 text-sm text-ink-600">
+          Find the right service with clear guidance at every step.
+        </p>
 
-          <div className="mt-5 flex flex-col gap-3">
-            {visibleCategories.map((cat) => (
-              <Link
-                key={cat.title}
-                to={cat.to}
-                className={`group flex items-start gap-3.5 overflow-hidden rounded-2xl border border-line bg-white p-4 shadow-sm transition-all duration-[900ms] ${EASE} active:-translate-y-1 active:border-navy-900 active:bg-navy-900 active:shadow-2xl active:shadow-navy-900/25`}
-              >
-                <span
-                  className={`flex size-11 shrink-0 items-center justify-center rounded-xl bg-brand-50 text-brand-600 transition-colors duration-[900ms] ${EASE} group-active:bg-white/10 group-active:text-white`}
-                >
-                  <cat.icon className="size-5.5" strokeWidth={1.75} />
-                </span>
-
-                <div className="min-w-0 flex-1">
-                  <p
-                    className={`text-[15px] font-semibold text-navy-900 transition-colors duration-[900ms] ${EASE} group-active:text-white`}
-                  >
-                    {cat.title}
-                  </p>
-                  <p
-                    className={`mt-1 text-[13px] leading-relaxed text-ink-600 transition-colors duration-[900ms] ${EASE} group-active:text-white/60`}
-                  >
-                    {cat.items.join(", ")}
-                  </p>
-
-                  {cat.badge && (
-                    <span
-                      className={`mt-2 inline-flex w-fit items-center rounded-full bg-brand-50 px-2.5 py-1 text-[11px] font-medium text-brand-600 transition-colors duration-[900ms] ${EASE} group-active:bg-white/10 group-active:text-white`}
-                    >
-                      {cat.badge}
-                    </span>
-                  )}
-
-                  <span
-                    className={`mt-2 flex items-center gap-1 text-[13px] font-semibold text-brand-600 transition-colors duration-[900ms] ${EASE} group-active:text-white`}
-                  >
-                    Explore Category
-                    <ArrowRight
-                      className={`size-3.5 transition-transform duration-[900ms] ${EASE} group-active:translate-x-1`}
-                    />
-                  </span>
-                </div>
-              </Link>
-            ))}
-          </div>
-
-          {hasMore && (
-            <button
-              type="button"
-              onClick={() => setShowAll((prev) => !prev)}
-              className="mt-4 flex w-full items-center justify-center gap-1.5 rounded-xl border border-line py-3 text-sm font-semibold text-brand-600 transition-colors duration-300 active:bg-brand-50/40"
-            >
-              {showAll ? "Show Less" : "View All Categories"}
-              {showAll ? (
-                <ChevronUp className="size-3.5" />
-              ) : (
-                <ArrowRight className="size-3.5" />
-              )}
-            </button>
-          )}
+        {/* Mobile: capped list + expand */}
+        <div className="mt-5 grid grid-cols-1 gap-3 sm:hidden">
+          {visibleCategories.map((cat, i) => (
+            <CategoryCard key={cat.title} cat={cat} variant={VARIANTS[i % VARIANTS.length]} />
+          ))}
         </div>
 
-        {/* ===================== DESKTOP / TABLET VERSION ===================== */}
-        <div className="hidden sm:block">
-          <p className="text-xs font-bold uppercase tracking-wide text-brand-600 sm:text-sm">
-            Service Directory
-          </p>
-          <h2 className="mt-2 text-2xl font-bold text-navy-900 sm:text-3xl">
-            Explore Services <span className="text-brand-600">by Category</span>
-          </h2>
-          <p className="mt-1.5 text-sm text-ink-600">
-            Find the right service with clear guidance at every step.
-          </p>
+        {hasMore && (
+          <button
+            type="button"
+            onClick={() => setShowAll((prev) => !prev)}
+            className="mt-4 flex w-full items-center justify-center gap-1.5 rounded-xl border border-line py-3 text-sm font-semibold text-brand-600 transition-colors duration-300 active:bg-brand-50/40 sm:hidden"
+          >
+            {showAll ? "Show Less" : "View All Categories"}
+            {showAll ? (
+              <ChevronUp className="size-3.5" />
+            ) : (
+              <ArrowRight className="size-3.5" />
+            )}
+          </button>
+        )}
 
-          <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-            {serviceCategories.map((cat) => (
-              <Link
-                key={cat.title}
-                to={cat.to}
-                className={`group flex flex-col overflow-hidden rounded-xl border border-line bg-white p-5 shadow-sm transition-all duration-[900ms] ${EASE} hover:-translate-y-1 hover:border-navy-900 hover:bg-navy-900 hover:shadow-2xl hover:shadow-navy-900/25`}
-              >
-                <span
-                  className={`-mx-5 -mt-5 mb-3.5 block h-1 w-[calc(100%+2.5rem)] bg-brand-500 transition-colors duration-[900ms] ${EASE} group-hover:bg-brand-400`}
-                />
-
-                <span className="flex size-11 shrink-0 items-center justify-center rounded-lg bg-brand-50 text-brand-600">
-                  <cat.icon className="size-5" strokeWidth={1.75} />
-                </span>
-
-                <h3
-                  className={`mt-3.5 text-base font-semibold text-navy-900 transition-colors duration-[900ms] ${EASE} group-hover:text-white`}
-                >
-                  {cat.title}
-                </h3>
-
-                <p
-                  className={`mt-1.5 line-clamp-2 text-[13px] leading-snug text-ink-600 transition-colors duration-[900ms] ${EASE} group-hover:text-white/60`}
-                >
-                  {cat.items.join(", ")}
-                </p>
-
-                {cat.badge && (
-                  <span
-                    className={`mt-3 inline-flex w-fit items-center rounded-full bg-brand-50 px-2.5 py-1 text-[11px] font-medium text-brand-600 transition-colors duration-[900ms] ${EASE} group-hover:bg-white/10 group-hover:text-white`}
-                  >
-                    {cat.badge}
-                  </span>
-                )}
-
-                <span
-                  className={`mt-3 inline-flex items-center gap-1 text-[13px] font-semibold text-brand-600 transition-colors duration-[900ms] ${EASE} group-hover:text-white`}
-                >
-                  Explore Category
-                  <ArrowRight
-                    className={`size-3.5 transition-transform duration-[900ms] ${EASE} group-hover:translate-x-1`}
-                  />
-                </span>
-              </Link>
-            ))}
-          </div>
+        {/* Desktop / tablet: full grid, every card visible */}
+        <div className="mt-8 hidden gap-5 sm:grid sm:grid-cols-2 lg:grid-cols-4">
+          {serviceCategories.map((cat, i) => (
+            <CategoryCard key={cat.title} cat={cat} variant={VARIANTS[i % VARIANTS.length]} />
+          ))}
         </div>
       </div>
     </section>

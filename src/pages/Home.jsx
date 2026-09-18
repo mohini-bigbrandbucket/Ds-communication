@@ -14,11 +14,12 @@ export default function Home() {
   return (
     <>
       <Hero />
-      <QuickActions />
+     
       <Reveal><ServiceCategories /></Reveal>
+       <QuickActions />
       {/* <Reveal><PopularServices /></Reveal> */}
       <Reveal><HowItWorks /></Reveal>
-      <Reveal><TrackApplication /></Reveal>
+      {/* <Reveal><TrackApplication /></Reveal> */}
       <Reveal><WhyUs /></Reveal>
       {/* <Reveal><UpdatesResources /></Reveal> */}
       <Reveal><Testimonials /></Reveal>

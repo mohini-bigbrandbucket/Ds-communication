@@ -14,7 +14,6 @@ export const primaryNav = [
 
 export const utilityLinks = [
   { label: "Customer Login", to: "/login/customer" },
-  { label: "Partner Login", to: "/login/partner" },
 ];
 
 export const topBarLeft = [

@@ -1,84 +1,118 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { ArrowRight, ShieldCheck } from "lucide-react";
-import heroImage from "../assets/hero1.jpeg";
+import { ArrowRight, Star } from "lucide-react";
+import heroImage from "../assets/hero.png";
 
 const STATIC_PART = "Government";
 const TYPED_PART = " & Digital Services, Made Simple.";
 
-function useTypewriter(text, speed = 120, startDelay = 300) {
+function useTypewriter(text, { typeSpeed = 120, deleteSpeed = 60, pauseAfterType = 1800, pauseAfterDelete = 500 } = {}) {
   const [count, setCount] = useState(0);
-  const [done, setDone] = useState(false);
+  const [phase, setPhase] = useState("typing"); // "typing" | "pausedTyped" | "deleting" | "pausedDeleted"
 
   useEffect(() => {
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reduce) {
       setCount(text.length);
-      setDone(true);
+      setPhase("pausedTyped");
       return;
     }
 
-    let i = 0;
-    let interval;
-    const timeout = setTimeout(() => {
-      interval = setInterval(() => {
-        i += 1;
-        setCount(i);
-        if (i >= text.length) {
-          clearInterval(interval);
-          setDone(true);
-        }
-      }, speed);
-    }, startDelay);
+    let timer;
 
-    return () => {
-      clearTimeout(timeout);
-      clearInterval(interval);
-    };
-  }, [text, speed, startDelay]);
+    if (phase === "typing") {
+      if (count < text.length) {
+        timer = setTimeout(() => setCount((c) => c + 1), typeSpeed);
+      } else {
+        timer = setTimeout(() => setPhase("pausedTyped"), pauseAfterType);
+      }
+    } else if (phase === "pausedTyped") {
+      timer = setTimeout(() => setPhase("deleting"), pauseAfterType);
+    } else if (phase === "deleting") {
+      if (count > 0) {
+        timer = setTimeout(() => setCount((c) => c - 1), deleteSpeed);
+      } else {
+        timer = setTimeout(() => setPhase("pausedDeleted"), pauseAfterDelete);
+      }
+    } else if (phase === "pausedDeleted") {
+      timer = setTimeout(() => setPhase("typing"), pauseAfterDelete);
+    }
 
-  return { typed: text.slice(0, count), done };
+    return () => clearTimeout(timer);
+  }, [phase, count, text, typeSpeed, deleteSpeed, pauseAfterType, pauseAfterDelete]);
+
+  return { typed: text.slice(0, count), typing: phase === "typing" || phase === "deleting" };
 }
 
+function GoogleGlyph() {
+  return (
+    <svg viewBox="0 0 24 24" className="size-5">
+      <path fill="#4285F4" d="M23.52 12.27c0-.85-.08-1.66-.22-2.45H12v4.64h6.47a5.53 5.53 0 0 1-2.4 3.63v3h3.88c2.27-2.09 3.57-5.17 3.57-8.82Z" />
+      <path fill="#34A853" d="M12 24c3.24 0 5.96-1.07 7.95-2.91l-3.88-3c-1.08.72-2.46 1.15-4.07 1.15-3.13 0-5.78-2.11-6.73-4.96H1.27v3.1A12 12 0 0 0 12 24Z" />
+      <path fill="#FBBC05" d="M5.27 14.28A7.2 7.2 0 0 1 4.89 12c0-.79.14-1.56.38-2.28v-3.1H1.27A12 12 0 0 0 0 12c0 1.94.46 3.77 1.27 5.38l4-3.1Z" />
+      <path fill="#EA4335" d="M12 4.75c1.76 0 3.35.61 4.6 1.8l3.44-3.44C17.95 1.19 15.24 0 12 0A12 12 0 0 0 1.27 6.62l4 3.1C6.22 6.86 8.87 4.75 12 4.75Z" />
+    </svg>
+  );
+}
+
+const REVIEWER_COLORS = ["bg-brand-400", "bg-sky-400", "bg-emerald-400"];
+
 export default function Hero() {
-  const { typed, done } = useTypewriter(TYPED_PART);
+  const { typed, typing } = useTypewriter(TYPED_PART);
 
   return (
     <section
-      className="relative flex min-h-[380px] items-center overflow-hidden bg-navy-900 bg-cover bg-center bg-no-repeat sm:min-h-[520px] lg:min-h-[85vh] lg:items-start"
+      className="relative flex min-h-[380px] items-center overflow-hidden bg-navy-900 bg-cover bg-center bg-no-repeat sm:min-h-[520px] lg:min-h-[85vh]"
       style={{ backgroundImage: `url(${heroImage})` }}
     >
       {/* readability overlay */}
-      <div className="absolute inset-0 bg-navy-950/70 sm:bg-gradient-to-r sm:from-navy-950/70 sm:via-navy-950/40 sm:to-transparent" />
-      <div className="relative mx-auto w-full max-w-7xl px-4 pt-4 pb-10 sm:px-6 sm:py-20 lg:px-8 lg:pb-24 lg:pt-20">
-        <div className="max-w-md sm:max-w-xl lg:max-w-2xl">
-          {/* Trust badge */}
-          <div className="inline-flex items-center gap-1.5 rounded-full border border-brand-400/30 bg-brand-400/10 px-3 py-1 backdrop-blur-sm sm:gap-2 sm:px-3 sm:py-1.5">
-            <ShieldCheck className="size-3 shrink-0 text-sky-300 sm:size-4" />
-            <p className="text-[10px] font-semibold uppercase leading-tight tracking-wide text-sky-300 sm:text-xs sm:tracking-wider md:text-sm">
-              Your Trusted Digital Service Partner
-            </p>
+      <div className="absolute inset-0 bg-navy-950/70 sm:bg-navy-950/60" />
+      <div className="relative mx-auto w-full max-w-7xl px-4 pt-4 pb-10 sm:px-6 sm:py-20 lg:px-8">
+        <div className="mx-auto flex max-w-md flex-col items-center text-center sm:max-w-xl lg:max-w-2xl">
+          {/* Google rating badge */}
+          <div className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-3 py-1.5 backdrop-blur-sm sm:px-4 sm:py-2">
+            <GoogleGlyph />
+            <div className="flex -space-x-2">
+              {REVIEWER_COLORS.map((color, i) => (
+                <span
+                  key={i}
+                  className={`size-5 rounded-full border-2 border-navy-900 ${color} sm:size-6`}
+                />
+              ))}
+            </div>
+            <div className="flex items-center gap-1">
+              {Array.from({ length: 5 }).map((_, i) => (
+                <Star
+                  key={i}
+                  className="size-3 fill-amber-400 text-amber-400 sm:size-3.5"
+                />
+              ))}
+            </div>
+            <span className="text-xs font-semibold text-white sm:text-sm">4.6/5</span>
+            <span className="text-xs text-white/70 sm:text-sm">(10k+ Reviews)</span>
           </div>
 
-          <h1 className="mt-3 min-h-[3.6em] text-[28px] font-bold leading-[1.2] tracking-tight text-white sm:mt-4 sm:min-h-[2.3em] sm:text-4xl sm:leading-[1.15] md:text-5xl lg:text-6xl [text-shadow:0_2px_12px_rgba(0,0,0,0.5)]">
+          <h1 className="mt-4 min-h-[3.6em] text-[28px] font-bold leading-[1.2] tracking-tight text-white sm:mt-6 sm:min-h-[2.3em] sm:text-4xl sm:leading-[1.15] md:text-5xl lg:text-6xl [text-shadow:0_2px_12px_rgba(0,0,0,0.5)]">
             {STATIC_PART}
             {typed}
             <span
               aria-hidden="true"
               className={`ml-1 inline-block h-[0.9em] w-[3px] translate-y-[0.08em] bg-sky-300 align-middle ${
-                done ? "animate-pulse" : ""
+                !typing ? "animate-pulse" : ""
               }`}
             />
             <span className="sr-only">{STATIC_PART}{TYPED_PART}</span>
           </h1>
 
-          <p className="mt-3 max-w-md text-sm leading-relaxed text-white/90 sm:mt-5 sm:max-w-lg sm:text-base lg:max-w-xl [text-shadow:0_1px_8px_rgba(0,0,0,0.5)]">
-            Apply online, upload documents, pay securely, and track every
-            application — government, business, tax, insurance and digital
-            services, all in one place.
+          <p className="mt-4 flex max-w-md flex-wrap items-center justify-center gap-x-1.5 gap-y-2 text-sm leading-relaxed text-white/90 sm:mt-6 sm:max-w-lg sm:text-base lg:max-w-xl [text-shadow:0_1px_8px_rgba(0,0,0,0.5)]">
+            <span>Apply online, upload documents, and track every application, the</span>
+            <span className="inline-flex items-center rounded-full bg-brand-600 px-3 py-1 text-xs font-bold text-white sm:text-sm">
+              100% Online
+            </span>
+            <span>way. Trusted by thousands. Backed by real experts.</span>
           </p>
 
-          <div className="mt-5 flex flex-row flex-wrap gap-2 sm:mt-8 sm:gap-3">
+          <div className="mt-5 flex flex-row flex-wrap justify-center gap-2 sm:mt-8 sm:gap-3">
             <Link
               to="/services"
               className="inline-flex items-center justify-center gap-1.5 rounded-lg bg-brand-600 px-4 py-2.5 text-xs font-semibold text-white transition-colors hover:bg-brand-500 sm:px-6 sm:py-3 sm:text-sm"

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Plus, X } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 
 const faqs = [
   {
@@ -32,41 +32,67 @@ export default function FAQ() {
   const [openIndex, setOpenIndex] = useState(null);
 
   return (
-    <section id="faq" className="bg-white border-t border-line">
- <div className="mx-auto max-w-7xl px-6 section-pad">        <h2 className="text-2xl font-bold text-navy-900 sm:text-[28px]">
-          Frequently Asked Questions
-        </h2>
+    <section id="faq" className="border-t border-line bg-white">
+      <div className="mx-auto max-w-7xl px-6 section-pad">
+        <div className="grid gap-10 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] lg:gap-16">
+          {/* Left: heading + support blurb */}
+          <div>
+            <h2 className="text-3xl font-extrabold leading-tight text-navy-900 sm:text-[34px]">
+              Frequently <span className="text-brand-600">asked</span>
+              <br />
+              questions
+            </h2>
+            <p className="mt-4 max-w-xs text-sm leading-relaxed text-ink-600 sm:text-base">
+              Check out our FAQs or talk to a live customer care specialist
+              by{" "}
+              <a href="tel:" className="text-brand-600 underline underline-offset-2">
+                phone
+              </a>
+              ,{" "}
+              <a href="#" className="text-brand-600 underline underline-offset-2">
+                chat
+              </a>
+              , or{" "}
+              <a href="mailto:" className="text-brand-600 underline underline-offset-2">
+                email
+              </a>
+              .
+            </p>
+          </div>
 
-        <div className="mt-8 grid gap-x-10 gap-y-1 lg:grid-cols-2">
-          {faqs.map((faq, i) => {
-            const isOpen = openIndex === i;
-            return (
-              <div key={faq.q} className="border-b border-line py-4">
-                <button
-                  type="button"
-                  onClick={() => setOpenIndex(isOpen ? null : i)}
-                  className="flex w-full items-center justify-between gap-4 text-left"
-                  aria-expanded={isOpen}
+          {/* Right: accordion cards */}
+          <div className="flex flex-col gap-3">
+            {faqs.map((faq, i) => {
+              const isOpen = openIndex === i;
+              return (
+                <div
+                  key={faq.q}
+                  className="rounded-xl border border-line bg-white transition-colors"
                 >
-                  <span className="text-base font-medium text-navy-900">
-                    {faq.q}
-                  </span>
-                  <span className="flex size-6 shrink-0 items-center justify-center rounded-full bg-brand-50 text-brand-600">
-                    {isOpen ? (
-                      <X className="size-3.5" />
-                    ) : (
-                      <Plus className="size-3.5" />
-                    )}
-                  </span>
-                </button>
-                {isOpen && (
-                  <p className="mt-3 max-w-lg text-base leading-relaxed text-ink-600">
-                    {faq.a}
-                  </p>
-                )}
-              </div>
-            );
-          })}
+                  <button
+                    type="button"
+                    onClick={() => setOpenIndex(isOpen ? null : i)}
+                    className="flex w-full items-center justify-between gap-4 px-5 py-4 text-left"
+                    aria-expanded={isOpen}
+                  >
+                    <span className="text-sm font-semibold text-navy-900 sm:text-base">
+                      {faq.q}
+                    </span>
+                    <ChevronDown
+                      className={`size-4 shrink-0 text-brand-600 transition-transform duration-300 ${
+                        isOpen ? "rotate-180" : ""
+                      }`}
+                    />
+                  </button>
+                  {isOpen && (
+                    <p className="px-5 pb-4 text-sm leading-relaxed text-ink-600 sm:text-base">
+                      {faq.a}
+                    </p>
+                  )}
+                </div>
+              );
+            })}
+          </div>
         </div>
       </div>
     </section>
